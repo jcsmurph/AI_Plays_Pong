@@ -1,5 +1,5 @@
 import pygame
-from pong_game.game import Game
+from pong_game import Game
 import neat
 import os
 import time
@@ -8,7 +8,6 @@ import pickle
 # python version 3.10.2
 # pygame version 2.1.2
 # Neat version 0.92
-# Testing a pull request
 
 class PongGame:
     def __init__(self, screen, width, height):
@@ -58,7 +57,7 @@ class PongGame:
         netTwo = neat.nn.FeedForwardNetwork.create(genomeTwo, config)
         self.genomeTwo = genomeTwo
 
-        maxAllowedHits = 50
+        maxAllowedHits = 100
 
         while run:
             for event in pygame.event.get():
@@ -110,8 +109,8 @@ class PongGame:
 
 # Define the Genomes
 def evaluateGenomes(genomes, config):
-    size = width, height = 700, 500
-    screen = pygame.display.set_mode((size))
+    width, height = 700, 500
+    screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption("AI Plays Pong")
 
     for g, (_, genomeOne) in enumerate(genomes):
@@ -122,7 +121,6 @@ def evaluateGenomes(genomes, config):
             pong = PongGame(screen, width, height)
 
             forceQuit = pong.trainAi(genomeOne, genomeTwo, config, draw=True)
-
             if forceQuit:
                 quit()
 
@@ -146,8 +144,8 @@ def smartestAi(config):
         winner = pickle.load(f)
     winnerNet = neat.nn.FeedForwardNetwork.create(winner, config)
 
-    size = width, height = 700, 500
-    screen = pygame.display.set_mode(size)
+    width, height = 700, 500
+    screen = pygame.display.set_mode(width,height)
     pygame.display.set_caption("AI Plays Pong")
     pong = PongGame(screen, width, height)
     pong.testAi(winnerNet)

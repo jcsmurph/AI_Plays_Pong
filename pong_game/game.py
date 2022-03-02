@@ -40,6 +40,7 @@ class Game:
             10, self.screenHeight // 2 - Paddle.paddleHeight // 2)
         self.playerTwoPaddle = Paddle(
             self.screenWidth - 10 - Paddle.paddleWidth, self.screenHeight // 2 - Paddle.paddleHeight//2)
+
         self.ball = Ball(self.screenWidth // 2, self.screenHeight // 2)
 
         self.playerOneScore = 0
@@ -67,24 +68,23 @@ class Game:
         self.screen.blit(hitsText, (self.screenWidth //
                          2 - hitsText.get_width()//2, 10))
 
-    def halfCourt(self):
-        for i in range(10, self.screenHeight, self.screenHeight//20):
-            if i % 2 == 1:
-                continue
-            pygame.draw.rect(
-                self.screen, self.white, (self.screenWidth//2 - 5, i, 1, self.screenHeight//20))
+    # def halfCourt(self):
+    #     for i in range(10, self.screenHeight, self.screenHeight//20):
+    #         if i % 2 == 1:
+    #             continue
+    #         pygame.draw.rect(
+    #             self.screen, self.white, (self.screenWidth//2 - 5, i, 1, self.screenHeight//20))
 
-    def paddleBallCollisionDirection(self, ball, paddle):
-        self.ball = ball
-        self.paddle = paddle
-        middlePaddle = paddle.y + paddle.paddleHeight / 2
+    # Deals with ball direction when contacting paddle
+    def paddleBallCollisionDirection(self, paddle):
+        ball = self.ball
+        middlePaddle = paddle.y + Paddle.paddleHeight / 2
         ballPaddleDiff = middlePaddle - ball.y
-        reductionFactor = (paddle.paddleHeight / 2) / ball.maxVelocity
+        reductionFactor = (Paddle.paddleHeight / 2) / ball.maxVelocity
         yVel = ballPaddleDiff / reductionFactor
         ball.yVelocity = -1 * yVel
 
     # Change direction of ball when hitting paddle or wall
-
     def handleBallCollision(self):
         ball = self.ball
         playerOnePaddle = self.playerOnePaddle
@@ -95,22 +95,22 @@ class Game:
 
         if ball.xVelocity < 0:
             if ball.y >= playerOnePaddle.y and ball.y <= playerOnePaddle.y + Paddle.paddleHeight or ball.x - ball.ballRadius <= playerOnePaddle.x + Paddle.paddleWidth:
-                ball.xVelocity *= -1
-                self.paddleBallCollisionDirection(ball, playerOnePaddle)
-                self.playerOneHits += 1
+                 ball.xVelocity *= -1
+                 self.paddleBallCollisionDirection(playerOnePaddle)
+                 self.playerOneHits += 1
 
         else:
-           if ball.y >= playerTwoPaddle.y and ball.y <= playerTwoPaddle.y + Paddle.paddleHeight and ball.x + ball.ballRadius >= playerTwoPaddle.x:
-                ball.xVelocity *= -1
-                self.paddleBallCollisionDirection(ball, playerTwoPaddle)
-                self.playerTwoHits += 1
+           if ball.y >= playerTwoPaddle.y and ball.y <= playerTwoPaddle.y + Paddle.paddleHeight or ball.x + ball.ballRadius >= playerTwoPaddle.x:
+                    ball.xVelocity *= -1
+                    self.paddleBallCollisionDirection(playerTwoPaddle)
+                    self.playerTwoHits += 1
 
     # draw screen
 
     def draw(self, drawScore=True, drawHits=False):
         self.screen.fill(self.black)
 
-      #  self.halfCourt()
+        #self.halfCourt()
 
         if drawScore:
             self.drawScore()

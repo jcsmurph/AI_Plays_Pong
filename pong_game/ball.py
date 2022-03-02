@@ -11,7 +11,7 @@ class Ball:
         self.x = self.originalX = x
         self.y = self.originalY = y
 
-        angle = self.getRandomAngle(-20, 20, [0])
+        angle = self.getRandomAngle(-30, 30, [0])
         pos = 1 if random.random() < 0.5 else -1
 
         self.xVelocity = pos * abs(math.cos(angle) * self.maxVelocity)
@@ -36,6 +36,7 @@ class Ball:
         self.y = self.originalY
         
         angle = self.getRandomAngle(-30, 30, [0])
+        xVelocity = abs(math.cos(angle) * self.maxVelocity)
         yVelocity = math.sin(angle) * self.maxVelocity
 
         self.xVelocity *= -1
