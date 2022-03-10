@@ -45,7 +45,6 @@ class Game:
 
         self.playerOneScore = 0
         self.playerTwoScore = 0
-
         self.playerOneHits = 0
         self.playerTwoHits = 0
 
@@ -94,13 +93,13 @@ class Game:
             ball.yVelocity *= -1
 
         if ball.xVelocity < 0:
-            if ball.y >= playerOnePaddle.y and ball.y <= playerOnePaddle.y + Paddle.paddleHeight or ball.x - ball.ballRadius <= playerOnePaddle.x + Paddle.paddleWidth:
+            if ball.y >= playerOnePaddle.y and ball.y <= playerOnePaddle.y + Paddle.paddleHeight and ball.x - ball.ballRadius <= playerOnePaddle.x + Paddle.paddleWidth:
                  ball.xVelocity *= -1
                  self.paddleBallCollisionDirection(playerOnePaddle)
                  self.playerOneHits += 1
 
         else:
-           if ball.y >= playerTwoPaddle.y and ball.y <= playerTwoPaddle.y + Paddle.paddleHeight or ball.x + ball.ballRadius >= playerTwoPaddle.x:
+           if ball.y >= playerTwoPaddle.y and ball.y <= playerTwoPaddle.y + Paddle.paddleHeight and ball.x + ball.ballRadius >= playerTwoPaddle.x:
                     ball.xVelocity *= -1
                     self.paddleBallCollisionDirection(playerTwoPaddle)
                     self.playerTwoHits += 1

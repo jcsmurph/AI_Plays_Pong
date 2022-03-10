@@ -79,7 +79,7 @@ class PongGame:
                 self.calculateFitness(gameInfo, duration)
                 break
 
-            return False
+        return False
 
     # Allow for AI to move paddles
     def aiMovePaddles(self, netOne, netTwo):
